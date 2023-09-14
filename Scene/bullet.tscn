@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7hm7qkkm1rb0"]
+[gd_scene load_steps=10 format=3 uid="uid://c7hm7qkkm1rb0"]
 
 [ext_resource type="Script" path="res://Code/Bullet.gd" id="1_5vplj"]
 [ext_resource type="AudioStream" uid="uid://dj06uhupptb62" path="res://Sounds/Poof.wav" id="2_negmh"]
+[ext_resource type="AudioStream" uid="uid://dre548p4h7l1" path="res://Sounds/laser_small_000.ogg" id="3_1v8yu"]
+[ext_resource type="AudioStream" uid="uid://cb4en5c42u88c" path="res://Sounds/low_frequency_explosion_001.ogg" id="4_3so3n"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ff0mn"]
 radius = 3.0
@@ -28,6 +30,10 @@ shape = SubResource("CircleShape2D_ff0mn")
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 mesh = SubResource("SphereMesh_1ictf")
 texture = SubResource("GradientTexture2D_ydfon")
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="MeshInstance2D"]
+stream = ExtResource("3_1v8yu")
+volume_db = -4.561
 
 [node name="Poof" type="CPUParticles2D" parent="."]
 emitting = false
@@ -65,6 +71,7 @@ scale_amount_max = 8.0
 color_ramp = SubResource("Gradient_u8k66")
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="Hit"]
-stream = ExtResource("2_negmh")
+stream = ExtResource("4_3so3n")
+pitch_scale = 9.9
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

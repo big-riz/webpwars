@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://ct05s8vrgf6io"]
 
 [ext_resource type="Script" path="res://Code/Enemy.gd" id="1_yp0fj"]
-[ext_resource type="AudioStream" uid="uid://br1gutaatb6bu" path="res://Sounds/Kill.wav" id="2_yv81f"]
+[ext_resource type="AudioStream" uid="uid://cb4en5c42u88c" path="res://Sounds/low_frequency_explosion_001.ogg" id="2_ddwso"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d4i0x"]
 
@@ -61,6 +61,8 @@ scale_amount_max = 8.0
 color_ramp = SubResource("Gradient_j60ij")
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="Kill"]
-stream = ExtResource("2_yv81f")
+stream = ExtResource("2_ddwso")
+volume_db = 1.369
+pitch_scale = 3.98
 
 [connection signal="body_entered" from="AreaDetector" to="." method="_on_area_detector_body_entered"]

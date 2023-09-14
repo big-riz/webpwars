@@ -8,6 +8,9 @@ var debounce = false
 func _process(delta):
 	self.translate(area_direction * SPEED * delta)
 
+func _ready():
+	shoot()
+
 func _on_body_entered(body):
 	# Stops an error that crashes the game.
 	if debounce == true:
@@ -21,6 +24,12 @@ func _on_body_entered(body):
 		poof()
 
 # make the bullet disappear with a poof :D
+func shoot():
+	
+	get_node("MeshInstance2D/Sound").play()
+	
+	
+
 func poof():
 	get_node("Poof").set_emitting(true)
 	get_node("Poof/Sound").play()

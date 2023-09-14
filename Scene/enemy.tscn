@@ -58,5 +58,6 @@ color_ramp = SubResource("Gradient_j60ij")
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="Kill"]
 stream = ExtResource("2_q7vin")
+volume_db = -74.807
 
 [connection signal="body_entered" from="AreaDetector" to="." method="_on_area_detector_body_entered"]
