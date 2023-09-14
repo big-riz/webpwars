@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dyqku4b80noy4"]
+[gd_scene load_steps=9 format=3 uid="uid://dyqku4b80noy4"]
 
 [ext_resource type="Script" path="res://Code/Score Script.gd" id="1_6ltk3"]
 [ext_resource type="PackedScene" uid="uid://bg7rpiubrhh1b" path="res://Scene/character.tscn" id="1_7r2wr"]
+[ext_resource type="Texture2D" uid="uid://b8rt5b734s3gr" path="res://Untitled.png" id="2_iaauq"]
 [ext_resource type="PackedScene" uid="uid://ct05s8vrgf6io" path="res://Scene/bigger_enemy.tscn" id="3_6oemb"]
 [ext_resource type="PackedScene" uid="uid://chluf4qb455d5" path="res://Scene/spawner.tscn" id="3_m5r3x"]
 [ext_resource type="PackedScene" uid="uid://dqq6h8h061orv" path="res://Scene/spawn_area.tscn" id="5_2hk0k"]
@@ -61,6 +62,11 @@ offset_right = 320.0
 offset_bottom = 406.0
 theme_override_font_sizes/font_size = 30
 text = "Score:"
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+position = Vector2(-110.555, 0)
+scale = Vector2(1000, 846.163)
+texture = ExtResource("2_iaauq")
 
 [node name="Character" parent="." instance=ExtResource("1_7r2wr")]
 position = Vector2(383, 397)

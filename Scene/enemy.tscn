@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://rxrmy77myb60"]
+[gd_scene load_steps=10 format=3 uid="uid://rxrmy77myb60"]
 
 [ext_resource type="Script" path="res://Code/Enemy.gd" id="1_shqbb"]
 [ext_resource type="AudioStream" uid="uid://br1gutaatb6bu" path="res://Sounds/Kill.wav" id="2_q7vin"]
@@ -21,6 +21,9 @@ radius = 12.0
 [sub_resource type="Gradient" id="Gradient_j60ij"]
 offsets = PackedFloat32Array(0, 0.503311, 1)
 colors = PackedColorArray(0.742612, 0, 0.133068, 1, 0.999997, 0.367348, 0.389703, 1, 1, 0.387377, 0.324754, 0)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_vukfl"]
+polygon = PackedVector2Array(0, -12, 5, -11, 9, -8, 12, -3, 12, 1, 10, 7, 5, 11, 0, 12, -7, 10, -10, 7, -12, 3, -12, 0, -11, -4, -9, -8, -5, -11)
 
 [node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
 motion_mode = 1
@@ -59,5 +62,8 @@ color_ramp = SubResource("Gradient_j60ij")
 [node name="Sound" type="AudioStreamPlayer2D" parent="Kill"]
 stream = ExtResource("2_q7vin")
 volume_db = -74.807
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_vukfl")
 
 [connection signal="body_entered" from="AreaDetector" to="." method="_on_area_detector_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ct05s8vrgf6io"]
+[gd_scene load_steps=10 format=3 uid="uid://ct05s8vrgf6io"]
 
 [ext_resource type="Script" path="res://Code/Enemy.gd" id="1_yp0fj"]
 [ext_resource type="AudioStream" uid="uid://cb4en5c42u88c" path="res://Sounds/low_frequency_explosion_001.ogg" id="2_ddwso"]
@@ -21,6 +21,9 @@ radius = 12.0
 [sub_resource type="Gradient" id="Gradient_j60ij"]
 offsets = PackedFloat32Array(0, 0.503311, 1)
 colors = PackedColorArray(0.742612, 0, 0.133068, 1, 0.999997, 0.367348, 0.389703, 1, 1, 0.387377, 0.324754, 0)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ndqxw"]
+polygon = PackedVector2Array(0, -12, 5, -11, 9, -8, 12, -3, 12, 1, 10, 7, 5, 11, 0, 12, -7, 10, -10, 7, -12, 3, -12, 0, -11, -4, -9, -8, -5, -11)
 
 [node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
 scale = Vector2(2, 2)
@@ -64,5 +67,8 @@ color_ramp = SubResource("Gradient_j60ij")
 stream = ExtResource("2_ddwso")
 volume_db = 1.369
 pitch_scale = 3.98
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_ndqxw")
 
 [connection signal="body_entered" from="AreaDetector" to="." method="_on_area_detector_body_entered"]

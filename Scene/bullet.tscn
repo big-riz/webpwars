@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7hm7qkkm1rb0"]
+[gd_scene load_steps=15 format=3 uid="uid://c7hm7qkkm1rb0"]
 
 [ext_resource type="Script" path="res://Code/Bullet.gd" id="1_5vplj"]
 [ext_resource type="AudioStream" uid="uid://dj06uhupptb62" path="res://Sounds/Poof.wav" id="2_negmh"]
 [ext_resource type="AudioStream" uid="uid://dre548p4h7l1" path="res://Sounds/laser_small_000.ogg" id="3_1v8yu"]
 [ext_resource type="AudioStream" uid="uid://cb4en5c42u88c" path="res://Sounds/low_frequency_explosion_001.ogg" id="4_3so3n"]
+[ext_resource type="Gradient" uid="uid://dghpy4ruqwmds" path="res://Scene/lighcolor.tres" id="5_nvxtm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ff0mn"]
 radius = 3.0
@@ -20,6 +21,28 @@ gradient = SubResource("Gradient_c4kld")
 
 [sub_resource type="Gradient" id="Gradient_u8k66"]
 colors = PackedColorArray(1, 0.027451, 0.184314, 1, 1, 0.469127, 0.475816, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ujsgn"]
+gradient = ExtResource("5_nvxtm")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.115385, 0.15812)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_udtvs"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+color = Color(0, 1, 1, 1)
+hue_variation_max = 1.0
+
+[sub_resource type="Gradient" id="Gradient_ombgu"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nsbgm"]
+gradient = SubResource("Gradient_ombgu")
+width = 1
 
 [node name="Bullet" type="Area2D"]
 script = ExtResource("1_5vplj")
@@ -73,5 +96,16 @@ color_ramp = SubResource("Gradient_u8k66")
 [node name="Sound" type="AudioStreamPlayer2D" parent="Hit"]
 stream = ExtResource("4_3so3n")
 pitch_scale = 9.9
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ujsgn")
+texture_scale = 2.12
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_udtvs")
+texture = SubResource("GradientTexture1D_nsbgm")
+lifetime = 0.1
+fixed_fps = 60
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
