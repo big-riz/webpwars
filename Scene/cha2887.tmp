@@ -1,9 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://bg7rpiubrhh1b"]
+[gd_scene load_steps=14 format=3 uid="uid://bg7rpiubrhh1b"]
 
 [ext_resource type="Script" path="res://Code/CharacterMovement.gd" id="1_g1m0b"]
 [ext_resource type="PackedScene" uid="uid://b2kxwebwo22x2" path="res://Scene/bullet.tscn" id="2_fsq17"]
 [ext_resource type="AudioStream" uid="uid://sn4cssdu0vrs" path="res://Sounds/slime_001.ogg" id="3_efedr"]
-[ext_resource type="Texture2D" uid="uid://d1dwkpw0wx5o" path="res://Code/darkness.tres" id="5_ugddr"]
 [ext_resource type="PackedScene" uid="uid://c6thcinnal6du" path="res://Scene/powerbullet.tscn" id="6_nshpd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l8pfc"]
@@ -29,6 +28,19 @@ fill_to = Vector2(0.867521, 0.324786)
 
 [sub_resource type="Gradient" id="Gradient_mtu4j"]
 colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_0couu"]
+offsets = PackedFloat32Array(0.408714, 0.665975)
+colors = PackedColorArray(0, 0, 0, 0, 0.00566115, 0.00566115, 0.00566115, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p0vr1"]
+gradient = SubResource("Gradient_0couu")
+width = 128
+height = 96
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 0)
 
 [node name="Character" type="CharacterBody2D"]
 script = ExtResource("1_g1m0b")
@@ -83,5 +95,6 @@ stream = ExtResource("3_efedr")
 volume_db = -20.526
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
 z_index = 1
-texture = ExtResource("5_ugddr")
+texture = SubResource("GradientTexture2D_p0vr1")

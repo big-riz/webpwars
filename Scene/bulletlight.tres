@@ -1,0 +1,14 @@
+[gd_resource type="AnimatedTexture" load_steps=4 format=3 uid="uid://chlvqo0y7p70b"]
+
+[ext_resource type="Texture2D" uid="uid://qlgge7rj8cn3" path="res://Scene/new_gradient_texture_2d.tres" id="1_bg563"]
+[ext_resource type="Texture2D" uid="uid://1024ytdh3xx0" path="res://Scene/new_gradient_texture_2d_blue.tres" id="2_6efuk"]
+[ext_resource type="Texture2D" uid="uid://dqjky8wccsdr" path="res://Scene/new_gradient_texture_2d_purp.tres" id="3_6rby8"]
+
+[resource]
+frames = 3
+frame_0/texture = ExtResource("1_bg563")
+frame_0/duration = 0.1
+frame_1/texture = ExtResource("2_6efuk")
+frame_1/duration = 0.1
+frame_2/texture = ExtResource("3_6rby8")
+frame_2/duration = 0.1

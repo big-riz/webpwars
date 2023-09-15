@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://dc06qckbuhdfx"]
+
+[ext_resource type="Script" path="res://Scene/powerbulletable.gd" id="2_x7eli"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_5ikb6"]
+
+[sub_resource type="Gradient" id="Gradient_nvdby"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f7sgp"]
+gradient = SubResource("Gradient_nvdby")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5u2yj"]
+
+[sub_resource type="Gradient" id="Gradient_d8o0q"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_by58d"]
+gradient = SubResource("Gradient_d8o0q")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.8)
+
+[node name="Powerable" type="Area2D"]
+z_index = 2
+script = ExtResource("2_x7eli")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+position = Vector2(1.13687e-13, -2.27374e-13)
+scale = Vector2(20.0227, 20)
+mesh = SubResource("SphereMesh_5ikb6")
+texture = SubResource("GradientTexture2D_f7sgp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5u2yj")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0, 1, 1)
+energy = 3.0
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_by58d")
+texture_scale = 2.12
+
+[node name="Timer" type="Timer" parent="PointLight2D"]
+wait_time = 0.033
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered" flags=18]

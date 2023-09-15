@@ -1,0 +1,121 @@
+[gd_scene load_steps=15 format=3 uid="uid://c6thcinnal6du"]
+
+[ext_resource type="Script" path="res://Code/powerbullet.gd" id="1_o7hgp"]
+[ext_resource type="AudioStream" uid="uid://dre548p4h7l1" path="res://Sounds/laser_small_000.ogg" id="2_0lct3"]
+[ext_resource type="AudioStream" uid="uid://dj06uhupptb62" path="res://Sounds/Poof.wav" id="3_oc081"]
+[ext_resource type="AudioStream" uid="uid://cb4en5c42u88c" path="res://Sounds/low_frequency_explosion_001.ogg" id="4_4qk63"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ff0mn"]
+radius = 3.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_1ictf"]
+radius = 3.0
+height = 6.0
+
+[sub_resource type="Gradient" id="Gradient_c4kld"]
+colors = PackedColorArray(1, 0.796078, 0, 1, 1, 1, 0.670588, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ydfon"]
+gradient = SubResource("Gradient_c4kld")
+
+[sub_resource type="Gradient" id="Gradient_u8k66"]
+colors = PackedColorArray(1, 0.027451, 0.184314, 1, 1, 0.469127, 0.475816, 0)
+
+[sub_resource type="Gradient" id="Gradient_f6ebm"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_63wol"]
+gradient = SubResource("Gradient_f6ebm")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.8)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_udtvs"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+color = Color(0, 1, 1, 1)
+hue_variation_max = 1.0
+
+[sub_resource type="Gradient" id="Gradient_ombgu"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nsbgm"]
+gradient = SubResource("Gradient_ombgu")
+width = 1
+
+[node name="Bullet" type="Area2D"]
+z_index = 2
+script = ExtResource("1_o7hgp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ff0mn")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("SphereMesh_1ictf")
+texture = SubResource("GradientTexture2D_ydfon")
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="MeshInstance2D"]
+stream = ExtResource("2_0lct3")
+volume_db = -4.561
+
+[node name="Poof" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 4
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+fract_delta = false
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+angular_velocity_max = 360.0
+scale_amount_min = 5.0
+scale_amount_max = 5.0
+color_ramp = SubResource("Gradient_u8k66")
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="Poof"]
+stream = ExtResource("3_oc081")
+
+[node name="Hit" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 4
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+fract_delta = false
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 120.0
+angular_velocity_max = 360.0
+scale_amount_min = 5.0
+scale_amount_max = 8.0
+color_ramp = SubResource("Gradient_u8k66")
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="Hit"]
+stream = ExtResource("4_4qk63")
+pitch_scale = 9.9
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0, 1, 1)
+energy = 3.0
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_63wol")
+texture_scale = 2.12
+
+[node name="Timer" type="Timer" parent="PointLight2D"]
+wait_time = 0.033
+autostart = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_udtvs")
+texture = SubResource("GradientTexture1D_nsbgm")
+lifetime = 0.1
+fixed_fps = 60
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

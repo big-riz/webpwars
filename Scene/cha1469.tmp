@@ -1,9 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bg7rpiubrhh1b"]
+[gd_scene load_steps=15 format=3 uid="uid://bg7rpiubrhh1b"]
 
 [ext_resource type="Script" path="res://Code/CharacterMovement.gd" id="1_g1m0b"]
 [ext_resource type="PackedScene" uid="uid://b2kxwebwo22x2" path="res://Scene/bullet.tscn" id="2_fsq17"]
 [ext_resource type="AudioStream" uid="uid://sn4cssdu0vrs" path="res://Sounds/slime_001.ogg" id="3_efedr"]
-[ext_resource type="Texture2D" uid="uid://d1dwkpw0wx5o" path="res://Code/darkness.tres" id="5_ugddr"]
+[ext_resource type="Script" path="res://Scene/Sprite2DDarkOverlay.gd" id="4_wpwm6"]
 [ext_resource type="PackedScene" uid="uid://c6thcinnal6du" path="res://Scene/powerbullet.tscn" id="6_nshpd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l8pfc"]
@@ -26,6 +26,17 @@ gradient = SubResource("Gradient_w4y30")
 fill = 1
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0.867521, 0.324786)
+
+[sub_resource type="Gradient" id="Gradient_0couu"]
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p0vr1"]
+gradient = SubResource("Gradient_0couu")
+width = 128
+height = 96
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="Gradient" id="Gradient_mtu4j"]
 colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 0)
@@ -64,6 +75,10 @@ zoom = Vector2(1.25, 1.25)
 position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 
+[node name="Sprite2D" type="Sprite2D" parent="Camera2D"]
+texture = SubResource("GradientTexture2D_p0vr1")
+script = ExtResource("4_wpwm6")
+
 [node name="Explosive" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 450
@@ -81,7 +96,3 @@ color_ramp = SubResource("Gradient_mtu4j")
 [node name="Sound" type="AudioStreamPlayer" parent="Explosive"]
 stream = ExtResource("3_efedr")
 volume_db = -20.526
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = 1
-texture = ExtResource("5_ugddr")

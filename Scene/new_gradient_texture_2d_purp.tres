@@ -1,0 +1,10 @@
+[gd_resource type="GradientTexture2D" load_steps=2 format=3 uid="uid://dqjky8wccsdr"]
+
+[ext_resource type="Gradient" uid="uid://blrlwl0g082bh" path="res://Scene/new_gradient_purp.tres" id="1_0g2yb"]
+
+[resource]
+gradient = ExtResource("1_0g2yb")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.85, 0.85)

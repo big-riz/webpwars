@@ -11,13 +11,18 @@ var current_color_index = 0
 
 func _ready():
 	shoot()
-
+	$PointLight2D/Timer.connect("timeout", _on_ColorTimer_timeout)
+	$PointLight2D/Timer.start()
 
 func _process(delta):
 	# Change the color every second
 	self.translate(area_direction * SPEED * delta)
 	
 
+func _on_ColorTimer_timeout():
+	current_color_index = (current_color_index + 1) % colors.size()
+	var color = Color(randf(), randf(), randf())
+	$PointLight2D.color = color
 
 	
 

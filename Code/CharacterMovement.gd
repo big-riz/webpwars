@@ -2,14 +2,15 @@ extends CharacterBody2D
 
 const SPEED = 300.0
 @export var Bullet: PackedScene
+@export var PowerBullet: PackedScene
 @onready var Camera = get_node("Camera2D")
 @export var fire_rate = 0.2
 var actual_rate = 0.2
 var timer = 0
-
+var powerBullet = false
 var power = false
 var power_timer = 0
-
+var powerBullet_timer = 0
 @onready var absolute_parent = get_parent()
 
 # controls the player's movement when they die.
@@ -25,7 +26,23 @@ func get_parameter_value(parameters, key):
 
 
 
+func _on_Viewport_size_changed():
+	$Sprite2D.texture.width = get_viewport_rect().size.x
+	$Sprite2D.texture.height = get_viewport_rect().size.y * 1.3
+	var base_size = Vector2(1920, 1920)
+	var scale_x = get_viewport_rect().size.x / base_size.x
+	var scale_y = get_viewport_rect().size.y*1.3 / base_size.y
+	($Sprite2D.texture as GradientTexture2D).fill_to = Vector2(0.2 * scale_x + 0.1, 0.2 * scale_y + 0.1)
+	
+	
 func _ready():
+	get_viewport().connect("size_changed",_on_Viewport_size_changed)
+	$Sprite2D.texture.width = get_viewport_rect().size.x
+	$Sprite2D.texture.height = get_viewport_rect().size.y*1.3
+	var base_size = Vector2(1920, 1920)
+	var scale_x = get_viewport_rect().size.x / base_size.x
+	var scale_y = get_viewport_rect().size.y*1.3 / base_size.y
+	($Sprite2D.texture as GradientTexture2D).fill_to = Vector2(0.2 * scale_x + 0.1, 0.2 * scale_y + 0.1)
 	# I have no idea why this makes the camera do that thing, but this is cool!
 	Camera.set("position", Vector2(100, 0))
 	# Create an HTTP request node and connect its completion signal.
@@ -60,7 +77,15 @@ func _http_request_completed(result, response_code, headers, body):
 	#var texture_rect = TextureRect.new()
 	self.get_node("MeshInstance2D").texture = texture
 	#texture_rect.texture = texture
+	
+	
+func _process(delta):
+	$Sprite2D.global_position = $Camera2D.get_screen_center_position()
+	$Sprite2D.global_rotation = 0
+	
+	
 func _physics_process(delta):
+
 	timer += delta
 	# Power up that you can get :D
 	if power == true:
@@ -71,6 +96,13 @@ func _physics_process(delta):
 	else:
 		actual_rate = fire_rate
 		power_timer = 0
+	
+	if powerBullet == true:
+		powerBullet_timer += delta
+		if powerBullet_timer >= 10:
+			powerBullet = false
+	else:
+		powerBullet_timer = 0
 	
 	# Get the input direction and handle the movement/deceleration.
 	var direction_x = Input.get_axis("Left", "Right")
@@ -86,7 +118,11 @@ func _physics_process(delta):
 	
 	# if the player isn't dead...
 	if Input.get_action_raw_strength("Shoot") && timer >= actual_rate:
-		var temp = Bullet.instantiate()
+		var temp
+		if (powerBullet == true):
+			temp = PowerBullet.instantiate()
+		else:
+			temp = Bullet.instantiate()
 		add_sibling(temp)
 		temp.global_position = get_node("BulletSpawn").get("global_position")
 		# this sets the rotation as to where it will fire
